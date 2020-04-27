@@ -8,7 +8,7 @@
 
 ## About
 
-This project is to replace the final for Software Engineering. This is not meant to be a vague project with ambiguous requirements, so we will list them below. Important to note that there is no correct way of implementing things outside of authorization (which we will mention below). As such it is up to you to decide how you would like to implement and structure your code. **<u>Just make it work</u>**. I would suggest you think of this project as a hackathon/proof of concept project , don't sweat the small stuff and just get the grand ideas working. It will make your life much easier.
+This project constitutes the final for Software Engineering. This is not meant to be a vague project with ambiguous requirements, so we will list them below. As such it is up to you to decide how you would like to implement and structure your code. **<u>Just make it work</u>**. I would suggest you think of this project as a hackathon/proof of concept project , don't sweat the small stuff and just get the grand ideas working. It will make your life much easier.
 
 ## Requirements
 
@@ -16,7 +16,7 @@ This project is to replace the final for Software Engineering. This is not meant
 
 ### Minimal Features: ***150 Points***
 
-The basic features you need to implement are some mechanism to visualize the names from the database and then like dislike them. This can be implemented in any way you want. This is the minimal requirements for the project.
+The basic features you need to implement are some mechanism to visualize the names from the database and then like or dislike them. This can be implemented in any way you want. This is the minimal requirements for the project.
 
 ### Additional Feature List  
 
