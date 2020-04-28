@@ -16,7 +16,7 @@ This project constitutes the final for Software Engineering. This is not meant t
 
 ### Minimal Features: ***150 Points***
 
-The basic features you need to implement are some mechanism to visualize the names from the database and then like or dislike them. This can be implemented in any way you want. This is the minimal requirements for the project.
+The basic features you need to implement are some mechanism to visualize the names from the database and then like or dislike them. You also need to be able to undo your likes or dislikes of names. This can be implemented in any way you want. This is the minimal requirements for the project.
 
 ### Additional Feature List  
 
