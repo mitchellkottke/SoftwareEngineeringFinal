@@ -1,7 +1,9 @@
 package com.example.sasha.finalsoftware;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.cs4531.finalsoftware.R;
 
 public class NamesListedActivity  extends AppCompatActivity {

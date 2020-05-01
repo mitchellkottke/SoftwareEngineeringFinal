@@ -2,8 +2,10 @@ package com.example.sasha.finalsoftware;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.cs4531.finalsoftware.R;
 
 public class MainActivity extends AppCompatActivity {
