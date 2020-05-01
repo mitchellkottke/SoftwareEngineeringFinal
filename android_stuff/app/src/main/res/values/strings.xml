@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FinalSoftware</string>
+    <string name="userLogin">userLogin</string>
+    <string name="userPassword">userPassword</string>
+    <string name="Username">Username</string>
+    <string name="Password">Password</string>
 </resources>
