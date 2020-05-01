@@ -11,12 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.sasha.finalsoftware.LikedNames"></activity>
-        <activity android:name="com.example.sasha.finalsoftware.NameGameFront" />
-        <activity android:name="com.example.sasha.finalsoftware.FrontPage" />
+        <activity android:name="com.example.sasha.finalsoftware.LikedNames"
+            android:label="Liked/Disliked Names"></activity>
+        <activity android:name="com.example.sasha.finalsoftware.NameGameFront"
+            android:label="Choose What Names"/>
+        <activity android:name="com.example.sasha.finalsoftware.FrontPage"
+            android:label="Welcome To Baby Name Generator"/>
         <activity
             android:name="com.example.sasha.finalsoftware.MainActivity"
-            android:label="Final Project">
+            android:label="Baby Name Tinder">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
