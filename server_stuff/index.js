@@ -82,7 +82,16 @@ app.post('/insertNames', function(req,res){
     res.send("Sent");
 });
 
+
 //Name decision stuff
+
+/**
+   Get a random name that the user hasnt answered yet
+   @author kottk055
+   @param req
+       user: Current user, REQUIRED
+       sex: Boy or girl, which sex the user wants to filter by, OPTIONAL
+*/
 app.post('/getName', function(req,res){
     console.log("/getName called...");
     var user = req.body.user;
@@ -101,22 +110,85 @@ app.post('/getName', function(req,res){
                 getName();
             }else{
                 console.log("Name has not been answered, sending");
-                res.status(0).send(name);
+                res.status(200).send(name);
             }
         });
     };
     var getName = function(){
         console.log("Looking for name");
-        Names.findOneRandom(function(err,doc){
-            if(err){
-                console.log("Error", err);
-                res.status(401).send("Cannot get name at this time");
-            }else{
-                console.log("Found name");
-                checkAnswered(doc);
-            }
-        });
+        if(filter){
+            Names.findOneRandom(filter, function(err,doc){
+                if(err){
+                    console.log("Error", err);
+                    res.status(401).send("Cannot get name at this time");
+                }else{
+                    console.log("Found name");
+                    checkAnswered(doc);
+                }
+            });
+        }else{
+            Names.findOneRandom(function(err,doc){
+                if(err){
+                    console.log("Error", err);
+                    res.status(401).send("Cannot get name at this time");
+                }else{
+                    console.log("Found name");
+                    checkAnswered(doc);
+                }
+            });
+        }
     };
+    var filter;
+    if(req.body.sex) filter = {sex:req.body.sex}
+    else filter = 0;
     getName();
 });
+
+//Login Stuff
+// @author Justin
+
+app.post('/createUser', function(req,res) {
+	console.log("/creatUser called...");
+	var newUser = {
+		username: req.body.user,
+		password: req.body.password
+	}
+	Users.create(newUser, function(err, doc) {
+	if(err){
+		console.log("Error: "+err);
+		res.send("Error could not add user to collection");
+	}
+	else {
+		console.log("Successfully created new user");
+		res.send("Successfully created new user");
+	}
+	});
+});
+
+app.post('/checkPassword', function(req,res) {
+	console.log("/checkPassword called...");
+	var user = req.body.user;
+	var password = req.body.password;
+	console.log("Checking if username is in the users database");
+	Users.findOne({username:user}, function(err, doc){
+	if(err || !doc){
+		console.log("This username does not exist");
+		res.send("This username does not exist");
+		}
+	else { 
+		console.log("User: "+user+" has been found"); 
+		Users.findOne({username:user,password:password}, function(err, doc){ 
+			if(err || !doc) {
+			console.log("The password for this user is incorrect");
+			res.send("The password is incorrect");
+			}
+			else {
+			console.log("The password is correct!");
+			res.send("The password is correct");
+			}
+		});
+	}
+});
+});
+
 app.listen(jsonRoute.port, ()=>console.log("NULL SERVER LAUNCHED. LISTENING ON PORT: " + jsonRoute.port));
