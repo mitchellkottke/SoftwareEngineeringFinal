@@ -145,6 +145,7 @@ app.post('/getName', function(req,res){
 });
 
 app.post('/nameAnswered', function(req,res){
+    console.log("/nameAnswered called...");
     var answer = {
         user : req.body.user,
         name : req.body.name,
@@ -153,6 +154,15 @@ app.post('/nameAnswered', function(req,res){
         year : req.body.year,
         answer : req.body.answer
     };
+    Answered.create(answer, function(err,doc){
+        if(err){
+            console.log("Error",err);
+            res.status(401).send("Answer could not be added");
+        }else{
+            console.log("Answer added");
+            res.status(200).send("Answer added");
+        }
+    });
 });
 
 //Login Stuff
