@@ -144,6 +144,17 @@ app.post('/getName', function(req,res){
     getName();
 });
 
+app.post('/nameAnswered', function(req,res){
+    var answer = {
+        user : req.body.user,
+        name : req.body.name,
+        percent : req.body.percent,
+        sex : req.body.sex,
+        year : req.body.year,
+        answer : req.body.answer
+    };
+});
+
 //Login Stuff
 // @author Justin
 
