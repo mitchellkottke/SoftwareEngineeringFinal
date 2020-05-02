@@ -144,6 +144,17 @@ app.post('/getName', function(req,res){
     getName();
 });
 
+/**
+   Submitting an answer to the db
+   @author kottk055
+   @param req
+       user: Current user, REQUIRED
+       name: Name that was answered, REQUIRED
+       percent: Percent from the name, REQUIRED
+       year: Year from the name, REQUIRED
+       sex: Sex from the name, REQUIRED
+       answer: Liked or disliked, REQUIRED
+*/
 app.post('/nameAnswered', function(req,res){
     console.log("/nameAnswered called...");
     var answer = {
@@ -213,21 +224,36 @@ app.post('/checkPassword', function(req,res) {
 });
 
 //Answered Questions thingy
-// @author Justin
-
+// @author Justin, Mitchell
+/**
+   @param req
+       user: Current user, REQUIRED
+       sex: Filter for sex, OPTIONAL
+       year: Filter for year, OPTIONAL
+       answer: Filter for answer, OPTIONAL
+       percent: Filter for percent, OPTIONAL
+*/
 app.post('/getList', function(req,res) {
-	console.log("/getList called...");
-	var username = req.body.user;
-	Answered.find({user:username}, function(err,doc){
+    console.log("/getList called...");
+    var username = req.body.user;
+    //Checking what filters were used
+    var filter = {user : username};
+    if(req.body.sex) filter.sex = req.body.sex;
+    if(req.body.year) filter.year = req.body.year;
+    if(req.body.answer) filter.answer = req.body.answer;
+    if(req.body.percent) filter.percent = req.body.percent;
+
+    //Find the names
+    Answered.find(filter, function(err,doc){
 	if(err || !doc){
-		console.log("This user has not liked nor disliked any names");
-		res.send("This user has not liked nor disliked any names");
+	    console.log("This user has not liked nor disliked any names");
+	    res.send("This user has not liked nor disliked any names");
 	}
 	else {
-		console.log("This user likes babies?");
-		res.send(doc);
+	    console.log("This user likes babies?");
+	    res.send(doc);
 	}
-});
+    });
 });
 
 
