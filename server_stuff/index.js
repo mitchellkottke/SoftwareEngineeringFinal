@@ -26,7 +26,7 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function(){
     console.log("Conection established to " + jsonRoute.url);
-    console.log("Skips: " + i);
+//    console.log("Skips: " + i);
 });
 
 //Schema declarations
@@ -52,6 +52,10 @@ app.get('/', function(req,res){
     res.send("Hello");
 });
 
+/**
+   DONT FUCKING CALL THIS GODDAMN FUNCTION YOU WILL OVERLOAD THE
+   SERVER IF IT ISNT DONE RIGHT
+*/
 app.post('/insertNames', function(req,res){
     console.log("/insertNames called...");
     if(!babyNames)
@@ -78,4 +82,41 @@ app.post('/insertNames', function(req,res){
     res.send("Sent");
 });
 
+//Name decision stuff
+app.post('/getName', function(req,res){
+    console.log("/getName called...");
+    var user = req.body.user;
+    var checkAnswered = function(name){
+        console.log("Checking if name has been answered");
+        var checkName = {
+            name : name.name,
+            user : user
+        };
+        Answered.findOne(checkName, function(err,doc){
+            if(err){
+                console.log("Error checking for name");
+                res.status(402).send("Cannot check name at this time");
+            }else if(doc){
+                console.log("Name already answered");
+                getName();
+            }else{
+                console.log("Name has not been answered, sending");
+                res.status(0).send(name);
+            }
+        });
+    };
+    var getName = function(){
+        console.log("Looking for name");
+        Names.findOneRandom(function(err,doc){
+            if(err){
+                console.log("Error", err);
+                res.status(401).send("Cannot get name at this time");
+            }else{
+                console.log("Found name");
+                checkAnswered(doc);
+            }
+        });
+    };
+    getName();
+});
 app.listen(jsonRoute.port, ()=>console.log("NULL SERVER LAUNCHED. LISTENING ON PORT: " + jsonRoute.port));
