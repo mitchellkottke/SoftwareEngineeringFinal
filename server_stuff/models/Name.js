@@ -6,7 +6,7 @@ var nameSchema = new Schema({
     name: {type: String, required: true},
     year: {type: Number, required: true},
     sex: {type: String, required: true},
-    percent: {type: Decimal128, required: true}},
+    percent: {type: Number, required: true}},
     {collection: 'Names'});
 nameSchema.plugin(random);
 
