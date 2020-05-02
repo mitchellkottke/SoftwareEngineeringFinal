@@ -1,17 +1,37 @@
-var express = require('express')
-var MongoClient = require("mongodb").MongoClient
-var app = express()
+var express = require('express');
+var app = express();
+var mongoose = require('mongoose');
+var session = require('express-session');
+var bp = require('body-parser');
 
-console.log("Swap address you are using for mongo here then erase me")
-const url = "mongodb://serveraddress"
-const database = "databasename"
-const PORTNUMBER = 9999
-var db = null //This will cause an error if connection fails, good to know for troubleshooting
+//Route information in routing.json
+const fs = require('fs');
+var route = readFileSync('routing.json');
+var jsonRoute = JSON.parse(route);
 
-MongoClient.connect(url, function(err, client) {
-    console.log("Connected successfully to server");
-    db = client.db(database);
+//Connecting mongoose to db
+mongoose.connect('mongodb://ukko.d.umn.edu:4321/AppNull');
+var db = mongoose.connection;
+
+//For mongoose connection errors
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function(){
+    console.log("Contion established to mongodb://ukko.d.umn.edu:4321/AppNull");
 });
 
+//Schema declarations
 
-app.listen(PORTNUMBER, ()=>{console.log("listening on " + PORTNUMBER)})
+
+//Login tracking
+app.use(session({
+    secret: 'hardly technical',
+    resave: true,
+    saveUninitialized: false
+}));
+
+app.use(bp.json());
+app.use(bp.urlencoded({extended: false}));
+
+console.log("\nStarting Server, set-up complete\n");
+
+//Write functions here
