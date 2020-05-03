@@ -20,8 +20,11 @@ public class MainActivity extends AppCompatActivity {
     private TextView loginAttempts;
     private int counter = 3;
 
+    private Button createNewUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -31,13 +34,16 @@ public class MainActivity extends AppCompatActivity {
         loginAttempts = (TextView)findViewById(R.id.attemptsTextView);
 
         loginAttempts.setText("No of attempts remaining: " + String.valueOf(counter));
+
     }
+
 
     public void switchToFrontPage(View myView) {
         validateLogin(username.getText().toString(), password.getText().toString());
     }
 
     private void validateLogin(String userName, String userPass){
+
         if((userName.equals("Admin")) && (userPass.equals("1234"))){
             Intent intent = new Intent(MainActivity.this, FrontPage.class);
             //intent.putExtra("account", account);
@@ -50,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
                 login.setEnabled(false);
             }
         }
+    }
+    public void switchToCreateUser(View view){
+        Intent myIntent = new Intent(MainActivity.this, CreateNewUser.class);
+        startActivity(myIntent);
+
     }
 
 }

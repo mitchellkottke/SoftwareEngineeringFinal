@@ -9,7 +9,16 @@ package="com.example.cs4531.finalsoftware">
     android:label="@string/app_name"
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
-    android:theme="@style/AppTheme">
+    android:theme="@style/AppTheme"
+    android:usesCleartextTraffic="true">
+    <activity android:name="com.example.sasha.finalsoftware.LikedNames"
+        android:label="Liked/Disliked Names"></activity>
+    <activity android:name="com.example.sasha.finalsoftware.NameGameFront"
+        android:label="Choose What Names"/>
+    <activity android:name="com.example.sasha.finalsoftware.FrontPage"
+        android:label="Welcome To Baby Name Generator"/>
+    <activity android:name="com.example.sasha.finalsoftware.CreateNewUser"
+        android:label="Create New User"/>
     <activity android:name="com.example.sasha.finalsoftware.MainActivity"
         android:label="HOME">
         <intent-filter>
