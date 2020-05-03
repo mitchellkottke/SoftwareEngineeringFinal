@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorGreen">
 
     <EditText
         android:id="@+id/newPassword"
@@ -14,8 +14,9 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="99dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/Password"
+        android:hint="@string/Password"
+        android:inputType="textPassword"
+        android:textColorHint="@color/colorBlack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newUsername" />
@@ -28,8 +29,9 @@
         android:layout_marginTop="200dp"
         android:layout_marginEnd="99dp"
         android:ems="10"
+        android:hint="@string/Username"
         android:inputType="textPersonName"
-        android:text="@string/Username"
+        android:textColorHint="@color/colorBlack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,9 +44,11 @@
         android:layout_marginStart="162dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="162dp"
-        android:layout_marginBottom="348dp"
+        android:layout_marginBottom="328dp"
+        android:background="@color/colorYellow"
         android:onClick="switchToMainPage"
         android:text="Create New User"
+        android:textColor="@color/colorBlack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.508"
