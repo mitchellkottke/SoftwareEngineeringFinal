@@ -191,4 +191,24 @@ app.post('/checkPassword', function(req,res) {
 });
 });
 
+//Answered Questions thingy
+// @author Justin
+
+app.post('/getList', function(req,res) {
+	console.log("/getList called...");
+	var username = req.body.user;
+	Answered.find({user:username}, function(err,doc){
+	if(err || !doc){
+		console.log("This user has not liked nor disliked any names");
+		res.send("This user has not liked nor disliked any names");
+	}
+	else {
+		console.log("This user likes babies?");
+		res.send(doc);
+	}
+});
+});
+
+
+
 app.listen(jsonRoute.port, ()=>console.log("NULL SERVER LAUNCHED. LISTENING ON PORT: " + jsonRoute.port));
