@@ -5,4 +5,11 @@
     <string name="Username">Username</string>
     <string name="Password">Password</string>
     <string name="serverURL">http://akka.d.umn.edu:2308</string>
+    <string name="nameLabel">Name:</string>
+    <string name="genderLabel">Gender:</string>
+    <string name="popularityLabel">Popularity:</string>
+    <string name="likeButton">Like</string>
+    <string name="dislikeButton">Dislike</string>
+    <string name="label1880">1880</string>
+    <string name="label2020">2020</string>
 </resources>
