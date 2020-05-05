@@ -21,10 +21,14 @@ public class LikedNames extends AppCompatActivity {
     //private ExampleAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    private String username;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         unLike = (Button)findViewById(R.id.unLikeButton);
+
+        username = getIntent().getStringExtra("username");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liked_names);

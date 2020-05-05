@@ -14,6 +14,7 @@ import org.w3c.dom.Text;
 public class NamesListedActivity extends AppCompatActivity {
 
     private String nameText;
+    private String username;
 
     private TextView typeOfNAme;
 
@@ -24,6 +25,7 @@ public class NamesListedActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         nameText = extras.getString("nameText");
+        username = extras.getString("username");
 
         typeOfNAme = (TextView)findViewById(R.id.typeOfNames);
         typeOfNAme.setText(nameText);

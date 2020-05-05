@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("LOGIN BUTTON SENT", response);
                         if(response.equals("The password is correct")) {
                             Intent intent = new Intent(MainActivity.this, FrontPage.class);
+                            intent.putExtra("username", user);
                             startActivity(intent);
                         }
                         else {

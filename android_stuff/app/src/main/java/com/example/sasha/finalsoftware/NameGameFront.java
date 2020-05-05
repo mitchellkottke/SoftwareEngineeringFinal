@@ -16,10 +16,14 @@ public class NameGameFront extends AppCompatActivity {
 
     private String nameText;
 
+    private String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_name_game_front);
+
+        username = getIntent().getStringExtra("username");
 
         girl = (Button)findViewById(R.id.girlButton);
         boy = (Button)findViewById(R.id.boyButton);
@@ -31,6 +35,7 @@ public class NameGameFront extends AppCompatActivity {
                 nameText = "girl";
                 Intent intent = new Intent(NameGameFront.this, NamesListedActivity.class);
                 intent.putExtra("nameText", nameText);
+                intent.putExtra("username", username);
                 startActivity(intent);
             }
         });
@@ -41,6 +46,7 @@ public class NameGameFront extends AppCompatActivity {
                 nameText = "boy";
                 Intent intent = new Intent(NameGameFront.this, NamesListedActivity.class);
                 intent.putExtra("nameText", nameText);
+                intent.putExtra("username", username);
                 startActivity(intent);
             }
         });
@@ -51,6 +57,7 @@ public class NameGameFront extends AppCompatActivity {
                 nameText = "both";
                 Intent intent = new Intent(NameGameFront.this, NamesListedActivity.class);
                 intent.putExtra("nameText", nameText);
+                intent.putExtra("username", username);
                 startActivity(intent);
             }
         });

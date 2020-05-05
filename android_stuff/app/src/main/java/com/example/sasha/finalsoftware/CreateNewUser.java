@@ -53,6 +53,9 @@ public class CreateNewUser extends AppCompatActivity {
                     public void onResponse(String response) {
                         // response
                         Log.d("CREATE USER BUTTON SENT", response);
+                        Intent intent = new Intent(CreateNewUser.this, MainActivity.class);
+                        intent.putExtra("username", newUserName);
+                        startActivity(intent);
                     }
                 },
                 new Response.ErrorListener() {
@@ -72,8 +75,5 @@ public class CreateNewUser extends AppCompatActivity {
             }
         };
         requests.addToRequestQueue(postRequest);
-
-            Intent intent = new Intent(CreateNewUser.this, MainActivity.class);
-            startActivity(intent);
     }
 }

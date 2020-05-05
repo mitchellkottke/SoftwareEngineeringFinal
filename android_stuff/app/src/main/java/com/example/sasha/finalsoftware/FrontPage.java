@@ -12,6 +12,8 @@ public class FrontPage extends AppCompatActivity {
     private Button play;
     private Button seeLikes;
 
+    private String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,15 +22,19 @@ public class FrontPage extends AppCompatActivity {
         play = (Button)findViewById(R.id.play);
         seeLikes = (Button)findViewById(R.id.seeLikes);
 
+        username = getIntent().getStringExtra("username");
+
     }
 
     public void goToNameGameFront(View v){
         Intent intent = new Intent(FrontPage.this, NameGameFront.class);
+        intent.putExtra("username", username);
         startActivity(intent);
     }
 
     public void goToSeeLikesAndDislikes(View v){
         Intent intent = new Intent(FrontPage.this, LikedNames.class);
+        intent.putExtra("username", username);
         startActivity(intent);
     }
 
