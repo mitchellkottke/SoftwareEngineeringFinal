@@ -184,12 +184,12 @@ app.post('/nameAnswered', function(req,res){
 app.post('/getGraphData', function(req,res){
     console.log("/getGraphData called...");
     var name = req.body.name;
-    Names.find({name:name}, 'year percent', function(err,docs){
+    Names.find({name:name},'year percent',{sort:{year:1}},function(err,docs){
         if(err){
             console.log("Error: ", err);
             res.status(400).send("Error occurred");
         }else{
-            console.log(docs);
+            console.log("Found graph docs");
             res.send(docs);
         }
     });
