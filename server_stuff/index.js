@@ -176,6 +176,25 @@ app.post('/nameAnswered', function(req,res){
     });
 });
 
+/**
+   Get the year and percent data for every instance of a name
+   @author kottk055
+   @req  name: Name to look for, REQUIRED
+*/
+app.post('/getGraphData', function(req,res){
+    console.log("/getGraphData called...");
+    var name = req.body.name;
+    Names.find({name:name}, 'year percent', function(err,docs){
+        if(err){
+            console.log("Error: ", err);
+            res.status(400).send("Error occurred");
+        }else{
+            console.log(docs);
+            res.send(docs);
+        }
+    });
+});
+
 //Login Stuff
 // @author Justin
 
