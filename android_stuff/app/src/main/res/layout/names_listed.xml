@@ -37,11 +37,12 @@
         android:layout_width="300dip"
         android:layout_height="300dip"
         android:layout_marginTop="36dp"
+        app:layout_constraintBottom_toTopOf="@id/dislikeButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/popularityLabel"
-        app:layout_constraintBottom_toTopOf="@id/dislikeButton"/>
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/nameLabel"
@@ -96,8 +97,8 @@
         android:layout_height="70dp"
         android:layout_marginStart="60dp"
         android:layout_marginBottom="30dp"
-        android:text="@string/likeButton"
         android:background="@drawable/ic_like"
+        android:onClick="likeClicked"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/dislikeButton" />
 
@@ -107,8 +108,8 @@
         android:layout_height="70dp"
         android:layout_marginStart="110dp"
         android:layout_marginBottom="30dp"
-        android:text="@string/dislikeButton"
         android:background="@drawable/ic_dislike"
+        android:onClick="dislikeClicked"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

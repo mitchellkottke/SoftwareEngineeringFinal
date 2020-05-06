@@ -150,8 +150,8 @@ app.post('/getName', function(req,res){
    @param req
        user: Current user, REQUIRED
        name: Name that was answered, REQUIRED
-       percent: Percent from the name, REQUIRED
-       year: Year from the name, REQUIRED
+       percent: Percent from the name, OPTIONAL
+       year: Year from the name, OPTIONAL
        sex: Sex from the name, REQUIRED
        answer: Liked or disliked, REQUIRED
 */
@@ -191,6 +191,25 @@ app.post('/getGraphData', function(req,res){
         }else{
             console.log("Found graph docs");
             res.send(docs);
+        }
+    });
+});
+
+/**
+   Get the most recent year and percent pair for a given name
+   @author kottk055
+   @req   name: Name to look for, REQUIRED
+*/
+app.post('/getRecentData', function(req,res){
+    console.log("/getRecentData called...");
+    var name = req.body.name;
+    Names.find({name:name},'year percent',{sort:{year:-1},limit:1},function(err,doc){
+        if(err || !doc){
+            console.log("Could not find name");
+            res.send("Could not find data for that name");
+        }else{
+            console.log("Found data");
+            res.send(doc);
         }
     });
 });
