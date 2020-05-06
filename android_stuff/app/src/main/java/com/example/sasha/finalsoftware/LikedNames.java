@@ -45,8 +45,8 @@ public class LikedNames extends AppCompatActivity {
     private ArrayList<ExampleItem> exampleItems = new ArrayList<>();
     private String name;
     private String sex;
-    private int year;
-    private double percent;
+    private int year = 2005;
+    private double percent = 0.089;
 
     private ExampleAdapter mAdapter;
 
@@ -76,10 +76,11 @@ public class LikedNames extends AppCompatActivity {
                         JSONObject jo = response.getJSONObject(i);
                             name = jo.getString("name");
                             sex = jo.getString("sex");
-                            year = (int) 2005;
-                            percent = (double) 0.0098;
+                            //year = 2005;
+                            //percent = 0.5;
 
-                            exampleItems.add(new ExampleItem(name, sex, year, percent));
+                            //exampleItems.add(new ExampleItem(name, sex, year, percent));
+                            exampleItems.add(new ExampleItem(name, sex));
                     }//end of for
 
                 }catch (JSONException e){
@@ -95,6 +96,15 @@ public class LikedNames extends AppCompatActivity {
             }
         });
         requests.addToRequestQueue(post);
+
+//        exampleItems.add(new ExampleItem("Joshua", "boy", year, percent));
+//        exampleItems.add(new ExampleItem("Jakob", "boy", year, percent));
+//        exampleItems.add(new ExampleItem("Betty", "boy", year, percent));
+
+//        exampleItems.add(new ExampleItem("Jakob", "boy"));
+//        exampleItems.add(new ExampleItem("Joshua", "boy"));
+//        exampleItems.add(new ExampleItem("Betty", "boy"));
+
 
         mRecycleView = findViewById(R.id.recyclerView);
         mRecycleView.setHasFixedSize(true);

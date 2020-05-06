@@ -7,11 +7,16 @@ public class ExampleItem {
     private int mYear;
     private double mPercent;
 
-    public ExampleItem(String name, String sex, int year, double percent){
+//    public ExampleItem(String name, String sex, int year, double percent){
+//        mName = name;
+//        mSex = sex;
+//        mYear = year;
+//        mPercent = percent;
+//    }
+
+    public ExampleItem(String name, String sex){
         mName = name;
         mSex = sex;
-        mYear = year;
-        mPercent = percent;
     }
 
     public String getmName(){ return mName; }
