@@ -57,7 +57,7 @@ public class LikedNames extends AppCompatActivity {
 //        setContentView(R.layout.activity_liked_names);
 //
 //        url = getString(R.string.serverURL);
-//        requests = RestRequests.getInstance(getApplicationContext());
+       requests = RestRequests.getInstance(getApplicationContext());
 //
 //        unLike = (Button)findViewById(R.id.unLikeButton);
 //
