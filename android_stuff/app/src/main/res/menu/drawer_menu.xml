@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    >
+
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/nav_generate"
+            android:icon="@drawable/ic_generate"
+            android:title="Generate Names"
+        />
+
+        <item android:id="@+id/nav_Liked"
+            android:icon="@drawable/ic_liked"
+            android:title="Liked Names"
+        />
+
+    </group>
+
+</menu>

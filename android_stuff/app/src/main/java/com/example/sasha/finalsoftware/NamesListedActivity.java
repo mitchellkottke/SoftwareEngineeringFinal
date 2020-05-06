@@ -36,7 +36,6 @@ public class NamesListedActivity extends AppCompatActivity {
 
     public RestRequests requests;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);

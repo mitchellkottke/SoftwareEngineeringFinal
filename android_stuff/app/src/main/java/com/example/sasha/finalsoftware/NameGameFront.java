@@ -3,6 +3,7 @@ package com.example.sasha.finalsoftware;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
@@ -22,6 +23,12 @@ public class NameGameFront extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_name_game_front);
+
+     /* hello, ignore this.. katrina is playing with a navigation bar
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+     */
 
         username = getIntent().getStringExtra("username");
 
