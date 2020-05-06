@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText password;
     private Button login;
     private TextView loginAttempts;
-    private int counter = 3;
+    private int counter = 4;
 
     private String user;
     private String pass;
@@ -46,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
         login = (Button) findViewById(R.id.loginButton);
         loginAttempts = (TextView)findViewById(R.id.attemptsTextView);
         requests = RestRequests.getInstance(getApplicationContext());
-        loginAttempts.setText("No of attempts remaining: " + String.valueOf(counter));
+        //loginAttempts.setText("No of attempts remaining: " + String.valueOf(counter));
+        loginAttempts.setText("Welcome");
 
     }
 
@@ -69,15 +70,22 @@ public class MainActivity extends AppCompatActivity {
                         if(response.equals("The password is correct")) {
                             Intent intent = new Intent(MainActivity.this, FrontPage.class);
                             intent.putExtra("username", user);
+                            loginAttempts.setText("Password Correct!");
                             startActivity(intent);
                         }
                         else {
-                            counter--;
-                            loginAttempts.setText("Login Failed. No of attempts remaining: " + String.valueOf(counter));
                             //Log.d("LOGIN VALIDATION ERROR", "USERNAME: " + userName + " PASSWORD: " + userPass + " ********");
-                            if (counter == 0) {
-                                login.setEnabled(false);
+                            if(response.equals("The password is incorrect")){
+                                counter--;
+                                loginAttempts.setText("Password incorrect. " + counter + " attempt(s) remaining");
+                                if (counter == 0) {
+                                    login.setEnabled(false);
+                                    loginAttempts.setText("No attempts remaining. Try again later.");
+                                }
+                            }else if (response.equals("This username does not exist")){
+                                loginAttempts.setText("This username does not exist. Please create a new account.");
                             }
+
                         }
                     }
                 },

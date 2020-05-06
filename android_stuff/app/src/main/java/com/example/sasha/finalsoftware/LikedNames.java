@@ -49,7 +49,6 @@ public class LikedNames extends AppCompatActivity {
     private double percent;
 
     private ExampleAdapter mAdapter;
-    //private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +76,8 @@ public class LikedNames extends AppCompatActivity {
                         JSONObject jo = response.getJSONObject(i);
                             name = jo.getString("name");
                             sex = jo.getString("sex");
-                            year = jo.getInt("year");
-                            percent = jo.getDouble("percent");
+                            year = (int) 2005;
+                            percent = (double) 0.0098;
 
                             exampleItems.add(new ExampleItem(name, sex, year, percent));
                     }//end of for
