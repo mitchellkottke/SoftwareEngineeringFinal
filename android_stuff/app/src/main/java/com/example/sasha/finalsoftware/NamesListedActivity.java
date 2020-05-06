@@ -6,6 +6,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.cs4531.finalsoftware.R;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
@@ -18,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,9 +27,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class NamesListedActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
+import java.util.HashMap;
+import java.util.Map;
+
+public class NamesListedActivity extends AppCompatActivity {
 
     private String url;
 
+    private String currentName;
     private String genderText;
     private String username;
 
@@ -107,13 +114,17 @@ public class NamesListedActivity extends AppCompatActivity implements GestureDet
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    currentName = response.getString("name");
                     nameView.setText(response.getString("name"));
                     if (!specifiedGender) {
+                        genderText = response.getString("sex");
                         String gender = response.getString("sex").substring(0,1).toUpperCase() +
                                 response.getString("sex").substring(1);
                         genderView.setText(gender);
                     }
-                }catch(Exception e){}
+                }catch(Exception e){
+                    getName();
+                }
                 updateGraph();
             }
         }, new Response.ErrorListener() {
@@ -176,6 +187,80 @@ public class NamesListedActivity extends AppCompatActivity implements GestureDet
                 Log.d("Error", error.toString());
             }
         });
+        requests.addToRequestQueue(post);
+    }
+
+    public void likeClicked(View view){
+        final String answer = "Liked";
+        final String gender = "boy";//genderText;
+        final String name = currentName;
+        final String user = username;
+        String target = url + "/nameAnswered";
+
+        StringRequest post = new StringRequest(Request.Method.POST, target, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(response.equals("Answer added")){
+                    getName();
+                }else{
+                    Toast.makeText(NamesListedActivity.this, "Cannot submit answer at this time", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error", error.toString());
+                Toast.makeText(NamesListedActivity.this, "Cannot submit answer at this time", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> json = new HashMap<String, String>();
+                json.put("name", name);
+                json.put("sex", gender);
+                json.put("answer", answer);
+                json.put("user", user);
+                return json;
+            }
+
+        };
+        requests.addToRequestQueue(post);
+    }
+
+    public void dislikeClicked(View view){
+        final String answer = "Disliked";
+        final String gender = genderText;
+        final String name = currentName;
+        final String user = username;
+        String target = url + "/nameAnswered";
+
+        StringRequest post = new StringRequest(Request.Method.POST, target, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(response.equals("Answer added")){
+                    getName();
+                }else{
+                    Toast.makeText(NamesListedActivity.this, "Cannot submit answer at this time", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error", error.toString());
+                Toast.makeText(NamesListedActivity.this, "Cannot submit answer at this time", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> json = new HashMap<String, String>();
+                json.put("name", name);
+                json.put("sex", gender);
+                json.put("answer", answer);
+                json.put("user", user);
+                return json;
+            }
+
+        };
         requests.addToRequestQueue(post);
     }
 
