@@ -74,7 +74,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
         holder.tvName.setText(currentItem.getmName());
         holder.tvSex.setText(currentItem.getmSex());
         holder.tvYear.setText(currentItem.getmYear());
-        holder.tvPercent.setText(currentItem.getmPercent());
+        holder.tvPercent.setText((int) currentItem.getmPercent());
 
     }
 

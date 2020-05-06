@@ -45,35 +45,18 @@ public class LikedNames extends AppCompatActivity {
     private ArrayList<ExampleItem> exampleItems = new ArrayList<>();
     private String name;
     private String sex;
-    private String year;
-    private String percent;
+    private int year;
+    private double percent;
 
     private ExampleAdapter mAdapter;
     //private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_liked_names);
-//
-//        url = getString(R.string.serverURL);
-//        requests = RestRequests.getInstance(getApplicationContext());
-//
-//        unLike = (Button)findViewById(R.id.unLikeButton);
-//
-//        Bundle extras = getIntent().getExtras();
-//        username = extras.getString("username");
-//
-//        mRecycleView = findViewById(R.id.recyclerView);
-//        mRecycleView.setHasFixedSize(true);
-//        mLayoutManager = new LinearLayoutManager(LikedNames.this);
-//        //mAdapter = new ExampleAdapter(exampleList);
-//
-//        mRecycleView.setLayoutManager(mLayoutManager);
-//        //mRecycleView.setAdapter(mAdapter);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liked_names);
+
+        requests = RestRequests.getInstance(getApplicationContext());
 
         Bundle extras = getIntent().getExtras();
         username = extras.getString("username");
@@ -94,18 +77,16 @@ public class LikedNames extends AppCompatActivity {
                         JSONObject jo = response.getJSONObject(i);
                             name = jo.getString("name");
                             sex = jo.getString("sex");
-                            year = jo.getString("year");
-                            percent = jo.getString("percent");
+                            year = jo.getInt("year");
+                            percent = jo.getDouble("percent");
 
-                             exampleItems.add(new ExampleItem(name, sex, year, percent));
-                    }
-
+                            exampleItems.add(new ExampleItem(name, sex, year, percent));
+                    }//end of for
 
                 }catch (JSONException e){
                     Log.d("ERROR", "Error getting list of likedNames");
                     e.printStackTrace();
-                }
-
+                }//end of try/catch
 
             }
         }, new Response.ErrorListener() {
