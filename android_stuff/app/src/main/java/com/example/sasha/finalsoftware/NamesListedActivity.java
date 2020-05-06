@@ -26,11 +26,10 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class NamesListedActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 import java.util.HashMap;
 import java.util.Map;
 
-public class NamesListedActivity extends AppCompatActivity {
+public class NamesListedActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
     private String url;
 
