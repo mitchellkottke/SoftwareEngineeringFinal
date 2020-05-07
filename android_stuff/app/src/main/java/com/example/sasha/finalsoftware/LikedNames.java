@@ -2,6 +2,7 @@ package com.example.sasha.finalsoftware;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.provider.DocumentsContract;
 import android.renderscript.Sampler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,16 +37,37 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
+//import org.bson.Document;
+//import org.bson.conversions.Bson;
+//import com.mongodb.ClientSessionOptions;
+//import com.mongodb.MongoClientSettings;
+//import com.mongodb.ServerAddress;
+//import com.mongodb.client.ChangeStreamIterable;
+//import com.mongodb.client.ClientSession;
+//import com.mongodb.client.FindIterable;
+//import com.mongodb.client.ListDatabasesIterable;
+//import com.mongodb.client.MongoClient;
+//import com.mongodb.client.MongoClients;
+//import com.mongodb.client.MongoCollection;
+//import com.mongodb.ConnectionString;
+//import com.mongodb.client.MongoCursor;
+//import com.mongodb.client.MongoDatabase;
+//import com.mongodb.client.MongoIterable;
+//import com.mongodb.stitch.android.core.Stitch;
+//import com.mongodb.stitch.android.core.StitchAppClient;
+//import com.mongodb.stitch.android.services.mongodb.remote.RemoteFindIterable;
+//import com.mongodb.stitch.android.services.mongodb.remote.RemoteMongoClient;
+//import com.mongodb.stitch.android.services.mongodb.remote.RemoteMongoCollection;
 
 public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
 
     private TextView errorTV;
 
-    private Button unLike;
     private RecyclerView mRecycleView;
-    //private ExampleAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private ExampleAdapter mAdapter;
 
     private String username;
     private String url;
@@ -59,10 +81,10 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
     private int year = 2005;
     private double percent = 0.089;
 
-    private ExampleAdapter mAdapter;
+    String currentAnswer;
+    private ArrayList<ExampleItem> filteredList = new ArrayList<>();
 
-    //NEW SORT
-    private ArrayList<String> arrayNames = new ArrayList<String>();
+    private Button likeDislike;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,14 +92,13 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
         setContentView(R.layout.activity_liked_names);
 
         errorTV = (TextView)findViewById(R.id.errorMessage);
+        likeDislike = findViewById(R.id.unLikeButton);
 
         requests = RestRequests.getInstance(getApplicationContext());
-
         Bundle extras = getIntent().getExtras();
         username = extras.getString("username");
 
         url = getString(R.string.serverURL);
-
         String targetURL = url + "/getList";
         JSONObject json = new JSONObject();
         try {
@@ -91,21 +112,22 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
 
                 for(int i=0; i<response.length(); i++){
                     JSONObject obj;
+
                     try {
                         obj = response.getJSONObject(i);
-                    }catch(Exception e){obj = null;
-                    Log.d("Res", "No object found");}
+                    }catch(Exception e){
+                        obj = null;
+                        Log.d("Res", "No object found");
+                    }
+
                     if(obj != null) {
                         try {
                             Log.d("Res", "Object found");
                             exampleItems.add(new ExampleItem(obj.getString("name"),
                                     obj.getString("sex"),
                                     obj.getString("answer")));
-                            arrayNames.add(obj.getString("name"));
                                     //obj.getInt("year"),
                                     //obj.getDouble("percent")));
-                            //exampleItems.add(new ExampleItem("Should be a name", "Sexual things"));
-                            Log.d("Res", "After example add");
                             throw new Exception();
                         } catch (Exception e) {
                             //errorTV.setText("Went to catch");
@@ -123,7 +145,7 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
         });
         requests.addToRequestQueue(post);
 
-    }
+    }//end of onCreate
 
     private void dataMissing(String nameStr, String sexStr){
         Log.d("DM", "In dataMissing");
@@ -163,6 +185,30 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
 
         mRecycleView.setLayoutManager(mLayoutManager);
         mRecycleView.setAdapter(mAdapter);
+
+        mAdapter.setOnItemClickListener(new ExampleAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                if (filteredList.size() !=0){
+                    ExampleItem currentItem = filteredList.get(position);
+                    currentAnswer = currentItem.getmAnswer();
+                    changeLikeDisliked(currentAnswer);
+                    Toast.makeText(LikedNames.this, currentItem.getmName() + " was clicked", Toast.LENGTH_SHORT).show();
+                }else {
+                    ExampleItem currentItem = exampleItems.get(position);
+                    currentAnswer = currentItem.getmAnswer();
+                    changeLikeDisliked(currentAnswer);
+                    Toast.makeText(LikedNames.this, currentItem.getmName() + " was clicked", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        likeDislike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //findAndUpdateMongo(currentAnswer);
+            }
+        });
     }
 
     public void sortPopUp(View v)
@@ -182,7 +228,7 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
         switch (id) {
             case R.id.sortByName:
                 sortByName();
-                Toast.makeText(LikedNames.this, toastText + " was clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LikedNames.this, toastText + " was clicked", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.likesOnly:
                 filter("Liked");
@@ -215,7 +261,7 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
     }
 
     private void filter(String text) {
-        ArrayList<ExampleItem> filteredList = new ArrayList<>();
+        filteredList = new ArrayList<>();
 
         for(ExampleItem item : exampleItems) {
             if (item.getmAnswer().equals(text)){
@@ -227,4 +273,69 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
 
         mAdapter.filterList(filteredList);
     }
+
+    public void changeLikeDisliked(String answer){
+        Button butt = findViewById(R.id.unLikeButton);
+
+        if(answer.equals("Liked")){
+            butt.setText("Unlike");
+
+
+
+        }else if(answer.equals("Disliked")){
+            butt.setText("Like");
+        }
+
+    }
+
 }
+
+//ALL NEW MONGO STUFF
+//        MongoClient client = MongoClients.create("mongodb://ukko.d.umn.edu:4321");
+//        MongoDatabase db = client.getDatabase("AppNull");
+//        Log.d("MGCLIENT", db.toString());
+//        MongoCollection<Document> answeredCollection = db.getCollection("Answered");
+//
+//        System.out.println("beforeUpdate");
+//        findAndPrint(answeredCollection);
+
+//        Document doc = new Document("name", new Document("$gt", username));
+//        doc.get("liked");
+//
+//        Bson query = doc;
+//        Bson update;
+//
+//        if(answer.equals("Liked")){
+//            update = new Document("$set",
+//                    new Document("answer", "Disliked"));
+//        }else{
+//            update = new Document("$set",
+//                    new Document("answer", "Liked"));
+//        }
+//
+//        answeredCollection.findOneAndUpdate(query, update);
+
+//        MongoClient mongoClient = MongoClients.create(
+//                MongoClientSettings.builder()
+//                        .applyToClusterSettings(builder ->
+//                                builder.hosts(Arrays.asList(new ServerAddress("mongodb://ukko.d.umn.edu:", 4321))))
+//                        .build());
+//        MongoClient mongoClient = MongoClients.create("mongodb://ukko.d.umn.edu:4321");
+//        MongoDatabase dbs = mongoClient.getDatabase("AppNull");
+//        MongoCollection<Document> collection = dbs.getCollection("Answered");
+//        MongoCursor<Document> cursor = collection.find().iterator();
+//        try {
+//            while (cursor.hasNext()) {
+//                System.out.println(cursor.next().toJson());
+//            }
+//        } finally {
+//            cursor.close();
+//        }
+
+//    private static void findAndPrint(MongoCollection<Document> coll) {
+//        FindIterable<Document> cursor = coll.find();
+//
+//        for (Document d : cursor)
+//            System.out.println(d);
+//        //Log.d("MGDOC", d);
+//    }

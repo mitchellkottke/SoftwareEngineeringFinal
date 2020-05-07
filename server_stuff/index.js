@@ -305,7 +305,32 @@ app.post('/undoLike', function(req,res){
     var name = req.body.name;
     var user = req.body.user;
 
-    Answered.findOneAndUpdate({user:user,name:name},{answer:"disliked"},function(err,doc){
+    Answered.findOneAndUpdate({user:user,name:name},{answer:"Disliked"},function(err,doc){
+        if(err){
+            console.log("Error occured");
+            res.send("Error occured");
+        }else if(!doc){
+            console.log("Name not found");
+            res.send("Name not found for this user");
+        }else{
+            console.log("Found and changed");
+            res.send("Answer changed");
+        }
+    });
+});
+
+/**
+   Change a liked name to disliked
+   @author kottk055
+   @req name: Name to change
+        user: Username name is under
+*/
+app.post('/undoDisike', function(req,res){
+    console.log("/undoDislike called");
+    var name = req.body.name;
+    var user = req.body.user;
+
+    Answered.findOneAndUpdate({user:user,name:name},{answer:"Liked"},function(err,doc){
         if(err){
             console.log("Error occured");
             res.send("Error occured");
