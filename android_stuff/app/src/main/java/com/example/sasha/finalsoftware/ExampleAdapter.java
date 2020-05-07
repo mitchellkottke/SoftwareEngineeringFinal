@@ -35,8 +35,8 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
             super(itemView);
             tvName = itemView.findViewById(R.id.textViewName);
             tvSex = itemView.findViewById(R.id.textViewSex);
-            //tvYear = itemView.findViewById(R.id.textViewYear);
-            //tvPercent = itemView.findViewById(R.id.textViewPercent);
+//            tvYear = itemView.findViewById(R.id.textViewYear);
+//            tvPercent = itemView.findViewById(R.id.textViewPercent);
 
             //NEW
             itemView.setOnClickListener(new View.OnClickListener() {
