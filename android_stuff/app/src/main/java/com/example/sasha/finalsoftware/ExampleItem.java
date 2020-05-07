@@ -4,14 +4,19 @@ public class ExampleItem {
 
     private String mName;
     private String mSex;
-    private String mYear;
-    private String mPercent;
+    private int mYear;
+    private double mPercent;
 
-    public ExampleItem(String question, String type, String reasonReport, String user){
-        mName = question;
-        mSex = type;
-        mYear = reasonReport;
-        mPercent = user;
+//    public ExampleItem(String name, String sex, int year, double percent){
+//        mName = name;
+//        mSex = sex;
+//        mYear = year;
+//        mPercent = percent;
+//    }
+
+    public ExampleItem(String name, String sex){
+        mName = name;
+        mSex = sex;
     }
 
     public String getmName(){ return mName; }
@@ -20,11 +25,11 @@ public class ExampleItem {
         return mSex;
     }
 
-    public String getmYear(){
+    public int getmYear(){
         return mYear;
     }
 
-    public String getmPercent(){
+    public double getmPercent(){
         return mPercent;
     }
 

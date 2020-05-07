@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="4dp"
-    app:cardBackgroundColor="@color/colorYellow"
+    app:cardBackgroundColor="@color/purple"
     app:cardCornerRadius="4dp">
 
     <RelativeLayout
@@ -22,6 +22,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:fontFamily="serif-monospace"
             android:text="Name"
             android:textColor="@android:color/black"
             android:textSize="20sp"
@@ -33,26 +34,32 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewName"
             android:layout_marginStart="16dp"
+            android:fontFamily="serif-monospace"
             android:text="Sex"
+            android:textColor="@android:color/black"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/textViewYear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewSex"
-            android:layout_marginStart="16dp"
-            android:text="Year"
-            android:textSize="15sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/textViewYear"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/textViewSex"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:fontFamily="serif-monospace"-->
+<!--            android:text="Year"-->
+<!--            android:textColor="@android:color/black"-->
+<!--            android:textSize="15sp" />-->
 
-        <TextView
-            android:id="@+id/textViewPercent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewYear"
-            android:layout_marginStart="16dp"
-            android:text="Percent"
-            android:textSize="15sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/textViewPercent"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/textViewYear"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:fontFamily="serif-monospace"-->
+<!--            android:text="Percent"-->
+<!--            android:textColor="@android:color/black"-->
+<!--            android:textSize="15sp" />-->
 
     </RelativeLayout>
 
