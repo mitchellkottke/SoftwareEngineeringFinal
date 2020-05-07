@@ -298,6 +298,44 @@ public class NamesListedActivity extends AppCompatActivity implements GestureDet
                 {
                     Toast.makeText(this,"Name is LIKED", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "RIGHTSWIIIIPE");
+
+                    //this is the likedclick body function bc i couldn't figure out how to call it
+                    final String answer = "Liked";
+                    final String gender = "boy";//genderText;
+                    final String name = currentName;
+                    final String user = username;
+                    String target = url + "/nameAnswered";
+
+                    StringRequest post = new StringRequest(Request.Method.POST, target, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            if(response.equals("Answer added")){
+                                getName();
+                            }else{
+                                Toast.makeText(NamesListedActivity.this, "Cannot submit answer at this time", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("Error", error.toString());
+                            Toast.makeText(NamesListedActivity.this, "Cannot submit answer at this time", Toast.LENGTH_SHORT).show();
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() {
+                            Map<String, String> json = new HashMap<String, String>();
+                            json.put("name", name);
+                            json.put("sex", gender);
+                            json.put("answer", answer);
+                            json.put("user", user);
+                            return json;
+                        }
+
+                    };
+                    requests.addToRequestQueue(post);
+
+
                 }
 
                 //detect right to left swipe or DISLIKE SWIPE
@@ -305,6 +343,44 @@ public class NamesListedActivity extends AppCompatActivity implements GestureDet
                 {
                    Toast.makeText(this, "Name is DISLIKED", Toast.LENGTH_SHORT).show();
                    Log.d(TAG, "LEFFT SWIIPPE");
+
+
+
+                   //this is the dislike clicked body function bc i couldn't figure out how to call it wooo!
+                    final String answer = "Disliked";
+                    final String gender = genderText;
+                    final String name = currentName;
+                    final String user = username;
+                    String target = url + "/nameAnswered";
+
+                    StringRequest post = new StringRequest(Request.Method.POST, target, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            if(response.equals("Answer added")){
+                                getName();
+                            }else{
+                                Toast.makeText(NamesListedActivity.this, "Cannot submit answer at this time", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("Error", error.toString());
+                            Toast.makeText(NamesListedActivity.this, "Cannot submit answer at this time", Toast.LENGTH_SHORT).show();
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() {
+                            Map<String, String> json = new HashMap<String, String>();
+                            json.put("name", name);
+                            json.put("sex", gender);
+                            json.put("answer", answer);
+                            json.put("user", user);
+                            return json;
+                        }
+
+                    };
+                    requests.addToRequestQueue(post);
                 }
             }
 
