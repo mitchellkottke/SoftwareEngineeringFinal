@@ -17,6 +17,8 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 //import androidx.appcompat.app.AppCompatActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +29,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NamesListedActivity extends AppCompatActivity {
+public class NamesListedActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
     private String url;
 
@@ -42,10 +44,23 @@ public class NamesListedActivity extends AppCompatActivity {
 
     public RestRequests requests;
 
+    private static final String TAG = "Swipe Position";
+    private float x1, x2, y1, y2;
+    private static int MIN_DISTANCE = 150;
+    private GestureDetector gestureDetector;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.names_listed);
+
+        //Initializing gestureDetector
+        this.gestureDetector = new GestureDetector(NamesListedActivity.this, this);
+
+
 
         url = getString(R.string.serverURL);
 
@@ -81,7 +96,6 @@ public class NamesListedActivity extends AppCompatActivity {
 
         getName();
     }
-
     /**
      * Get and display a name and gender of the name
      * @author kottk055
@@ -249,4 +263,83 @@ public class NamesListedActivity extends AppCompatActivity {
         requests.addToRequestQueue(post);
     }
 
+
+
+
+//Override on touch
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        gestureDetector.onTouchEvent(event);
+
+    switch(event.getAction()){
+            //starting to swipe time gesture
+        case MotionEvent.ACTION_DOWN:
+            x1 = event.getX();
+            y1 = event.getY();
+            break;
+            //ending time swipe gesture
+        case MotionEvent.ACTION_UP:
+            x2 = event.getX();
+            y2 = event.getY();
+
+            //getting value for horizontal swipe
+            float valueX = x2 - x1;
+
+            //getting value for vertical swipe
+            float valueY = y2 - y1;
+
+            if (Math.abs(valueX) > MIN_DISTANCE)
+            {
+                //detect left to right swipe or LIKE SWIPE
+                if(x2>x1)
+                {
+                    Toast.makeText(this,"Name is LIKED", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "RIGHTSWIIIIPE");
+                }
+
+                //detect right to left swipe or DISLIKE SWIPE
+                else
+                {
+                   Toast.makeText(this, "Name is DISLIKED", Toast.LENGTH_SHORT).show();
+                   Log.d(TAG, "LEFFT SWIIPPE");
+                }
+            }
+
+    }
+
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean onDown(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
 }
