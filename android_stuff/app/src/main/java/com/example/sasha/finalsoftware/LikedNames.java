@@ -12,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.cs4531.finalsoftware.R;
 import com.google.android.gms.common.util.CollectionUtils;
 import com.google.gson.JsonObject;
@@ -37,7 +38,31 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+//import org.bson.Document;
+//import org.bson.conversions.Bson;
+//import com.mongodb.ClientSessionOptions;
+//import com.mongodb.MongoClientSettings;
+//import com.mongodb.ServerAddress;
+//import com.mongodb.client.ChangeStreamIterable;
+//import com.mongodb.client.ClientSession;
+//import com.mongodb.client.FindIterable;
+//import com.mongodb.client.ListDatabasesIterable;
+//import com.mongodb.client.MongoClient;
+//import com.mongodb.client.MongoClients;
+//import com.mongodb.client.MongoCollection;
+//import com.mongodb.ConnectionString;
+//import com.mongodb.client.MongoCursor;
+//import com.mongodb.client.MongoDatabase;
+//import com.mongodb.client.MongoIterable;
+//import com.mongodb.stitch.android.core.Stitch;
+//import com.mongodb.stitch.android.core.StitchAppClient;
+//import com.mongodb.stitch.android.services.mongodb.remote.RemoteFindIterable;
+//import com.mongodb.stitch.android.services.mongodb.remote.RemoteMongoClient;
+//import com.mongodb.stitch.android.services.mongodb.remote.RemoteMongoCollection;
 
 public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
 
@@ -59,7 +84,7 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
     private int year = 2005;
     private double percent = 0.089;
 
-    private String currentAnswer;
+    String currentAnswer;
     private ArrayList<ExampleItem> filteredList = new ArrayList<>();
 
     private Button likeDislike;
@@ -109,7 +134,7 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
                             throw new Exception();
                         } catch (Exception e) {
                             //errorTV.setText("Went to catch");
-                            //dataMissing(name,sex);
+                            dataMissing(name,sex);
                         }
                     }
                 }
@@ -125,7 +150,6 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
 
     }//end of onCreate
 
-    /*
     private void dataMissing(String nameStr, String sexStr){
         Log.d("DM", "In dataMissing");
         final String name = nameStr;
@@ -155,7 +179,6 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
 
         requests.addToRequestQueue(req);
     }
-    */
 
     private void loopDone(){
         mRecycleView = findViewById(R.id.recyclerView);
@@ -172,13 +195,13 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
                 if (filteredList.size() !=0){
                     ExampleItem currentItem = filteredList.get(position);
                     currentAnswer = currentItem.getmAnswer();
+                    name=currentItem.getmName();
 
-                    changeLikeDisliked(currentAnswer);
                     Toast.makeText(LikedNames.this, currentItem.getmName() + " was clicked", Toast.LENGTH_SHORT).show();
                 }else {
                     ExampleItem currentItem = exampleItems.get(position);
                     currentAnswer = currentItem.getmAnswer();
-                    changeLikeDisliked(currentAnswer);
+                    name=currentItem.getmName();
                     Toast.makeText(LikedNames.this, currentItem.getmName() + " was clicked", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -187,8 +210,7 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
         likeDislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //findAndUpdateMongo(currentAnswer);
-
+                changeLikeDisliked(currentAnswer,name);
             }
         });
     }
@@ -256,18 +278,68 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
         mAdapter.filterList(filteredList);
     }
 
-    public void changeLikeDisliked(String answer){
+    public void changeLikeDisliked(String answer,String name){
         Button butt = findViewById(R.id.unLikeButton);
 
         if(answer.equals("Liked")){
             butt.setText("Unlike");
+            String targetURL = url + "/undoLike";
+            JSONObject json = new JSONObject();
+            try {
+                json.put("user", username);
+                json.put("name",name);
+            }catch(Exception e){}
 
+            JsonObjectRequest post = new JsonObjectRequest(Request.Method.POST, targetURL, json, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.d("Res", "In response");
+                    if (response.toString()!="Answer changed"){
+                        Toast.makeText(LikedNames.this, "Error Occurred", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(LikedNames.this, "Like undone", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("Error", error.toString());
+                }
+            });
+            requests.addToRequestQueue(post);
 
 
         }else if(answer.equals("Disliked")){
             butt.setText("Like");
+            String targetURL = url + "/undoDislike";
+            JSONObject json = new JSONObject();
+            try {
+                json.put("user", username);
+                json.put("name",name);
+            }catch(Exception e){}
+
+            JsonObjectRequest post = new JsonObjectRequest(Request.Method.POST, targetURL, json, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.d("Res", "In response");
+                    if (response.toString()!="Answer changed"){
+                        Toast.makeText(LikedNames.this, "Error Occurred", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(LikedNames.this, "Dislike undone", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("Error", error.toString());
+                }
+            });
+            requests.addToRequestQueue(post);
         }
 
     }
 
 }
+
