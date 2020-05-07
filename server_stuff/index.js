@@ -294,6 +294,30 @@ app.post('/getList', function(req,res) {
     });
 });
 
+/**
+   Change a liked name to disliked
+   @author kottk055
+   @req name: Name to change
+        user: Username name is under
+*/
+app.post('/undoLike', function(req,res){
+    console.log("/undoLike called");
+    var name = req.body.name;
+    var user = req.body.user;
+
+    Answered.findOneAndUpdate({user:user,name:name},{answer:"disliked"},function(err,doc){
+        if(err){
+            console.log("Error occured");
+            res.send("Error occured");
+        }else if(!doc){
+            console.log("Name not found");
+            res.send("Name not found for this user");
+        }else{
+            console.log("Found and changed");
+            res.send("Answer changed");
+        }
+    });
+});
 
 
 app.listen(jsonRoute.port, ()=>console.log("NULL SERVER LAUNCHED. LISTENING ON PORT: " + jsonRoute.port));
