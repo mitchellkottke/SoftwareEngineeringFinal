@@ -1,5 +1,6 @@
 package com.example.sasha.finalsoftware;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.provider.DocumentsContract;
@@ -288,7 +289,6 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
 
     public void changeLikeDisliked(String answer,String name){
         Button butt = findViewById(R.id.unLikeButton);
-
         if(answer.equals("Liked")){
 
             String targetURL = url + "/undoLike";
@@ -316,6 +316,7 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
                 }
             });
             requests.addToRequestQueue(post);
+            refresh();
 
 
         }else if(answer.equals("Disliked")){
@@ -345,8 +346,58 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
                 }
             });
             requests.addToRequestQueue(post);
+            refresh();
         }
 
+    }
+    public void refresh(){
+        exampleItems.clear();
+        filteredList.clear();
+        String targetURL = url + "/getList";
+        JSONObject json = new JSONObject();
+        try {
+            json.put("user", username);
+        }catch(Exception e){}
+
+        CustomJsonArrayRequest post = new CustomJsonArrayRequest(Request.Method.POST, targetURL, json, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.d("Res", "In response");
+
+                for(int i=0; i<response.length(); i++){
+                    JSONObject obj;
+
+                    try {
+                        obj = response.getJSONObject(i);
+                    }catch(Exception e){
+                        obj = null;
+                        Log.d("Res", "No object found");
+                    }
+
+                    if(obj != null) {
+                        try {
+                            Log.d("Res", "Object found");
+                            exampleItems.add(new ExampleItem(obj.getString("name"),
+                                    obj.getString("sex"),
+                                    obj.getString("answer")));
+                            //obj.getInt("year"),
+                            //obj.getDouble("percent")));
+                            throw new Exception();
+                        } catch (Exception e) {
+                            //errorTV.setText("Went to catch");
+                            dataMissing(name,sex);
+                        }
+                    }
+                }
+                loopDone();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error", error.toString());
+            }
+        });
+        requests.addToRequestQueue(post);
     }
 
 }
