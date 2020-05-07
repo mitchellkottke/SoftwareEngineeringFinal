@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="4dp"
-    app:cardBackgroundColor="@color/purple"
+    app:cardBackgroundColor="@color/darkYellow"
     app:cardCornerRadius="4dp">
 
     <RelativeLayout
-        android:layout_width="393dp"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_marginTop="56dp"
@@ -36,6 +36,17 @@
             android:layout_marginStart="16dp"
             android:fontFamily="serif-monospace"
             android:text="Sex"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textViewAnswer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewSex"
+            android:layout_marginStart="16dp"
+            android:fontFamily="serif-monospace"
+            android:text="Answer"
             android:textColor="@android:color/black"
             android:textSize="15sp" />
 

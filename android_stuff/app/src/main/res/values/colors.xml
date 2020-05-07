@@ -9,4 +9,6 @@
     <color name="orange">#ff9f1c</color>
     <color name="white">#FFF</color>
     <color name="purple">#5e548e</color>
+    <color name="likeGreen">#89e786</color>
+    <color name="dislikeRed">#e78686</color>
 </resources>

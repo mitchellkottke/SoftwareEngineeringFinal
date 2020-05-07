@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/sortByName"
+        android:title="Sort Name Alphabetically" />
+    <item
+        android:id="@+id/likesOnly"
+        android:title="Likes Only" />
+    <item
+        android:id="@+id/dislikesOnly"
+        android:title="Dislikes Only" />
+    <item
+        android:id="@+id/girlsOnly"
+        android:title="Girls Only" />
+    <item
+        android:id="@+id/boysOnly"
+        android:title="Boys Only" />
+</menu>

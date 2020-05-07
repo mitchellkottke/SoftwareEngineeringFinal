@@ -1,10 +1,12 @@
 package com.example.sasha.finalsoftware;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.cs4531.finalsoftware.R;
@@ -14,7 +16,6 @@ import java.util.ArrayList;
 public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> {
     private ArrayList<ExampleItem> mExampleList;
 
-    //NEW
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
@@ -28,6 +29,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
     public static class ExampleViewHolder extends  RecyclerView.ViewHolder{
         public TextView tvName;
         public TextView tvSex;
+        public TextView tvAnswer;
         public TextView tvYear;
         public TextView tvPercent;
 
@@ -35,10 +37,10 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
             super(itemView);
             tvName = itemView.findViewById(R.id.textViewName);
             tvSex = itemView.findViewById(R.id.textViewSex);
+            tvAnswer = itemView.findViewById(R.id.textViewAnswer);
 //            tvYear = itemView.findViewById(R.id.textViewYear);
 //            tvPercent = itemView.findViewById(R.id.textViewPercent);
 
-            //NEW
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -51,7 +53,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
                 }
             });
 
-        }
+        }//end of public ExampleViewHolder
     }
 
     public ExampleAdapter(ArrayList<ExampleItem> exampleList) {
@@ -73,13 +75,27 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
 
         holder.tvName.setText(currentItem.getmName());
         holder.tvSex.setText(currentItem.getmSex());
+        holder.tvAnswer.setText(currentItem.getmAnswer());
         //holder.tvYear.setText((int)currentItem.getmYear());
         //holder.tvPercent.setText((int) currentItem.getmPercent());
+
+        String ans = currentItem.getmAnswer();
+        if(ans.equals("Liked")){
+            holder.tvAnswer.setBackgroundColor(Color.parseColor("#89e786"));
+        }else{
+            holder.tvAnswer.setBackgroundColor(Color.parseColor("#e78686"));
+        }
 
     }
 
     @Override
     public int getItemCount() {
         return mExampleList.size();
+    }
+
+    //NEW SORT
+    public void filterList(ArrayList<ExampleItem> filteredList) {
+        mExampleList = filteredList;
+        notifyDataSetChanged();
     }
 }

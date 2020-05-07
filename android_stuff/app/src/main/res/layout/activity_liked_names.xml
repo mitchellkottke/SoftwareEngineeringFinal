@@ -7,9 +7,10 @@
     tools:context="com.example.sasha.finalsoftware.LikedNames">
 
     <RelativeLayout
+        android:id="@+id/likedNameRelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/purple">
+        android:background="@color/colorGreen">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -30,9 +31,28 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="30dp"
             android:layout_marginBottom="-60dp"
-            android:background="@drawable/button_round"
+            android:background="@drawable/both_drawable"
+            android:fontFamily="serif-monospace"
             android:text="Unlike"
-            android:visibility="visible"/>
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/sortButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/recyclerView"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="152dp"
+            android:layout_marginBottom="-60dp"
+            android:background="@drawable/both_drawable"
+            android:fontFamily="serif-monospace"
+            android:onClick="sortPopUp"
+            android:text="Sort By"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/errorMessage"
