@@ -57,7 +57,7 @@ public class LikedNames extends AppCompatActivity {
 //        setContentView(R.layout.activity_liked_names);
 //
 //        url = getString(R.string.serverURL);
-//        requests = RestRequests.getInstance(getApplicationContext());
+        requests = RestRequests.getInstance(getApplicationContext());
 //
 //        unLike = (Button)findViewById(R.id.unLikeButton);
 //
@@ -89,23 +89,22 @@ public class LikedNames extends AppCompatActivity {
         CustomJsonArrayRequest post = new CustomJsonArrayRequest(Request.Method.POST, targetURL, json, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                try{
-                    for(int i=0; i<response.length(); i++){
-                        JSONObject jo = response.getJSONObject(i);
-                            name = jo.getString("name");
-                            sex = jo.getString("sex");
-                            year = jo.getString("year");
-                            percent = jo.getString("percent");
+                for(int i=0; i<response.length(); i++) {
+                    JSONObject jo;
+                    try {
+                        jo = response.getJSONObject(i);
+                        name = jo.getString("name");
+                        sex = jo.getString("sex");
+                        year = jo.getString("year");
+                        percent = jo.getString("percent");
 
-                             exampleItems.add(new ExampleItem(name, sex, year, percent));
+                        exampleItems.add(new ExampleItem(name, sex, year, percent));
+                    } catch (JSONException e) {
+                        dataMissing(name, sex);
+//                    Log.d("ERROR", "Error getting list of likedNames");
+//                    e.printStackTrace();
                     }
-
-
-                }catch (JSONException e){
-                    Log.d("ERROR", "Error getting list of likedNames");
-                    e.printStackTrace();
                 }
-
 
             }
         }, new Response.ErrorListener() {
@@ -124,6 +123,32 @@ public class LikedNames extends AppCompatActivity {
         mRecycleView.setLayoutManager(mLayoutManager);
         mRecycleView.setAdapter(mAdapter);
 
+    }
+
+    private void dataMissing(String nameStr, String sexStr){
+        final String name = nameStr;
+        final String sex = sexStr;
+
+        JSONObject json = new JSONObject();
+        try {
+            json.put("name", name);
+        }catch(Exception e){}
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url + "/getRecentData", json, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try{
+                    double percent = response.getDouble("percent");
+                    int year = response.getInt("year");
+                    exampleItems.add(new ExampleItem(name, sex, Integer.toString(year), Double.toString(percent)));
+                }catch(Exception e){Log.d("Error","Could not get name data");}
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error", error.toString());
+            }
+        });
     }
 
 
