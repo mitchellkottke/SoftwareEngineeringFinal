@@ -196,12 +196,19 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
                     ExampleItem currentItem = filteredList.get(position);
                     currentAnswer = currentItem.getmAnswer();
                     name=currentItem.getmName();
-
+                    if(currentAnswer.equals("Liked")){
+                        likeDislike.setText("Unlike");
+                    }else if(currentAnswer.equals("Disliked")){
+                        likeDislike.setText("Like");}
                     Toast.makeText(LikedNames.this, currentItem.getmName() + " was clicked", Toast.LENGTH_SHORT).show();
                 }else {
                     ExampleItem currentItem = exampleItems.get(position);
                     currentAnswer = currentItem.getmAnswer();
                     name=currentItem.getmName();
+                    if(currentAnswer.equals("Liked")){
+                        likeDislike.setText("Unlike");
+                    }else if(currentAnswer.equals("Disliked")){
+                        likeDislike.setText("Like");}
                     Toast.makeText(LikedNames.this, currentItem.getmName() + " was clicked", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -210,6 +217,7 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
         likeDislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 changeLikeDisliked(currentAnswer,name);
             }
         });
@@ -282,7 +290,7 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
         Button butt = findViewById(R.id.unLikeButton);
 
         if(answer.equals("Liked")){
-            butt.setText("Unlike");
+
             String targetURL = url + "/undoLike";
             JSONObject json = new JSONObject();
             try {
@@ -311,7 +319,7 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
 
 
         }else if(answer.equals("Disliked")){
-            butt.setText("Like");
+
             String targetURL = url + "/undoDislike";
             JSONObject json = new JSONObject();
             try {
