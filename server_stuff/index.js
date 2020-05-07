@@ -325,7 +325,7 @@ app.post('/undoLike', function(req,res){
    @req name: Name to change
         user: Username name is under
 */
-app.post('/undoDisike', function(req,res){
+app.post('/undoDislike', function(req,res){
     console.log("/undoDislike called");
     var name = req.body.name;
     var user = req.body.user;
