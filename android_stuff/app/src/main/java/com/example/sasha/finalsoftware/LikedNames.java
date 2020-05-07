@@ -39,28 +39,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-//import org.bson.Document;
-//import org.bson.conversions.Bson;
-//import com.mongodb.ClientSessionOptions;
-//import com.mongodb.MongoClientSettings;
-//import com.mongodb.ServerAddress;
-//import com.mongodb.client.ChangeStreamIterable;
-//import com.mongodb.client.ClientSession;
-//import com.mongodb.client.FindIterable;
-//import com.mongodb.client.ListDatabasesIterable;
-//import com.mongodb.client.MongoClient;
-//import com.mongodb.client.MongoClients;
-//import com.mongodb.client.MongoCollection;
-//import com.mongodb.ConnectionString;
-//import com.mongodb.client.MongoCursor;
-//import com.mongodb.client.MongoDatabase;
-//import com.mongodb.client.MongoIterable;
-//import com.mongodb.stitch.android.core.Stitch;
-//import com.mongodb.stitch.android.core.StitchAppClient;
-//import com.mongodb.stitch.android.services.mongodb.remote.RemoteFindIterable;
-//import com.mongodb.stitch.android.services.mongodb.remote.RemoteMongoClient;
-//import com.mongodb.stitch.android.services.mongodb.remote.RemoteMongoCollection;
-
 public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
 
     private TextView errorTV;
@@ -81,7 +59,7 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
     private int year = 2005;
     private double percent = 0.089;
 
-    String currentAnswer;
+    private String currentAnswer;
     private ArrayList<ExampleItem> filteredList = new ArrayList<>();
 
     private Button likeDislike;
@@ -131,7 +109,7 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
                             throw new Exception();
                         } catch (Exception e) {
                             //errorTV.setText("Went to catch");
-                            dataMissing(name,sex);
+                            //dataMissing(name,sex);
                         }
                     }
                 }
@@ -147,6 +125,7 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
 
     }//end of onCreate
 
+    /*
     private void dataMissing(String nameStr, String sexStr){
         Log.d("DM", "In dataMissing");
         final String name = nameStr;
@@ -176,6 +155,7 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
 
         requests.addToRequestQueue(req);
     }
+    */
 
     private void loopDone(){
         mRecycleView = findViewById(R.id.recyclerView);
@@ -192,6 +172,7 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
                 if (filteredList.size() !=0){
                     ExampleItem currentItem = filteredList.get(position);
                     currentAnswer = currentItem.getmAnswer();
+
                     changeLikeDisliked(currentAnswer);
                     Toast.makeText(LikedNames.this, currentItem.getmName() + " was clicked", Toast.LENGTH_SHORT).show();
                 }else {
@@ -207,6 +188,7 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
             @Override
             public void onClick(View v) {
                 //findAndUpdateMongo(currentAnswer);
+
             }
         });
     }
@@ -289,53 +271,3 @@ public class LikedNames extends AppCompatActivity implements PopupMenu.OnMenuIte
     }
 
 }
-
-//ALL NEW MONGO STUFF
-//        MongoClient client = MongoClients.create("mongodb://ukko.d.umn.edu:4321");
-//        MongoDatabase db = client.getDatabase("AppNull");
-//        Log.d("MGCLIENT", db.toString());
-//        MongoCollection<Document> answeredCollection = db.getCollection("Answered");
-//
-//        System.out.println("beforeUpdate");
-//        findAndPrint(answeredCollection);
-
-//        Document doc = new Document("name", new Document("$gt", username));
-//        doc.get("liked");
-//
-//        Bson query = doc;
-//        Bson update;
-//
-//        if(answer.equals("Liked")){
-//            update = new Document("$set",
-//                    new Document("answer", "Disliked"));
-//        }else{
-//            update = new Document("$set",
-//                    new Document("answer", "Liked"));
-//        }
-//
-//        answeredCollection.findOneAndUpdate(query, update);
-
-//        MongoClient mongoClient = MongoClients.create(
-//                MongoClientSettings.builder()
-//                        .applyToClusterSettings(builder ->
-//                                builder.hosts(Arrays.asList(new ServerAddress("mongodb://ukko.d.umn.edu:", 4321))))
-//                        .build());
-//        MongoClient mongoClient = MongoClients.create("mongodb://ukko.d.umn.edu:4321");
-//        MongoDatabase dbs = mongoClient.getDatabase("AppNull");
-//        MongoCollection<Document> collection = dbs.getCollection("Answered");
-//        MongoCursor<Document> cursor = collection.find().iterator();
-//        try {
-//            while (cursor.hasNext()) {
-//                System.out.println(cursor.next().toJson());
-//            }
-//        } finally {
-//            cursor.close();
-//        }
-
-//    private static void findAndPrint(MongoCollection<Document> coll) {
-//        FindIterable<Document> cursor = coll.find();
-//
-//        for (Document d : cursor)
-//            System.out.println(d);
-//        //Log.d("MGDOC", d);
-//    }
